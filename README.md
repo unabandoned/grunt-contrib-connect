@@ -1,6 +1,20 @@
-# grunt-contrib-connect v5.0.1 [![Build Status](https://github.com/gruntjs/grunt-contrib-connect/workflows/Tests/badge.svg)](https://github.com/gruntjs/grunt-contrib-connect/actions?workflow=Tests)
+# @unabandoned/grunt-contrib-connect [![CI](https://github.com/unabandoned/grunt-contrib-connect/actions/workflows/ci.yml/badge.svg)](https://github.com/unabandoned/grunt-contrib-connect/actions/workflows/ci.yml)
 
 > Start a connect web server
+
+A maintained fork of [grunt-contrib-connect](https://github.com/gruntjs/grunt-contrib-connect),
+kept by the [`unabandoned`](https://github.com/unabandoned) org. The task name and options are
+unchanged. Differences from upstream 5.0.1:
+
+- The abandoned `connect`, `portscanner`, `http2-wrapper`, `connect-livereload` and `async`
+  dependencies are gone: the middleware stack, the free-port probe and the livereload snippet
+  injector live in `tasks/lib/`, and `protocol: 'http2'` uses Node's built-in `node:http2`
+  (still accepting HTTPS/1.1 clients). The `connect` argument handed to `middleware` and
+  `onCreateServer` callbacks is the in-tree, connect-compatible app factory.
+- `serve-static` is on 2.x and `open` on 11.x (loaded only when the `open` option is used).
+- With `port: 0` or `port: '?'`, the actual bound port is written back to the config and
+  passed to the `connect.<target>.listening` event, instead of `0`.
+- Requires Node.js 22.12 or later.
 
 
 
@@ -9,8 +23,10 @@
 If you haven't used [Grunt](https://gruntjs.com/) before, be sure to check out the [Getting Started](https://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](https://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-contrib-connect --save-dev
+npm install grunt-contrib-connect@npm:@unabandoned/grunt-contrib-connect --save-dev
 ```
+
+Installing it under the upstream name keeps `grunt.loadNpmTasks('grunt-contrib-connect')` working.
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 

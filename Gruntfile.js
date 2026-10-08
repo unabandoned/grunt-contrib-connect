@@ -228,31 +228,21 @@ module.exports = function(grunt) {
     }
   };
 
-  grunt.initConfig({
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
+  // The test suite closes every server it started; record them as they are
+  // created without changing what each target's own onCreateServer does.
+  Object.keys(testConnectInstances).forEach(function(target) {
+    var options = testConnectInstances[target].options;
+    var own = options.onCreateServer ? [].concat(options.onCreateServer) : [];
+    options.onCreateServer = own.concat(function(server) {
+      if (global.__connectTestServers) {
+        global.__connectTestServers.push(server);
       }
-    },
+    });
+  });
 
-    nodeunit: {
-      tests: ['test/*_test.js']
-    },
-
+  grunt.initConfig({
     connect: testConnectInstances
   });
 
   grunt.loadTasks('tasks');
-
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-internal');
-
-  grunt.registerTask('test', ['jshint', 'connect', 'nodeunit']);
-  grunt.registerTask('default', ['test', 'build-contrib']);
 };
