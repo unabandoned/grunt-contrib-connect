@@ -1,0 +1,31 @@
+schema: 1
+
+package: "@unabandoned/grunt-contrib-connect"
+
+upstream:
+  repo: gruntjs/grunt-contrib-connect
+  reason: "no release since 5.0.1 in October 2024, while still carrying connect, portscanner, http2-wrapper and connect-livereload, all frozen since 2018-2023"
+
+summary: >-
+  Grunt task that starts a static web server (HTTP, HTTPS or HTTP/2) for the
+  duration of a build, with optional livereload snippet injection.
+
+why-forked: >-
+  CyberChef runs it in its build, and upstream stopped releasing while its
+  runtime tree rotted: connect, portscanner (which drags in async 2),
+  http2-wrapper and connect-livereload are all abandoned, and open and
+  serve-static were a major behind. The fork replaces connect with a small
+  in-tree middleware stack, portscanner with an in-tree port probe and
+  http2-wrapper with node:http2, vendors connect-livereload, drops async, and
+  moves open and serve-static to their current majors.
+
+used-by:
+  - consumer: TheTechNetwork/CyberChef
+    purpose: >-
+      the connect:prod target serves build/prod/ on port 8000 (or --port) for
+      the duration of `grunt testui`, so the Nightwatch browser tests can load
+      the production build
+
+status: active
+
+tags: [grunt, gruntplugin, server, http, static]

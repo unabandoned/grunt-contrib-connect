@@ -1,36 +1,38 @@
 {
-  "name": "grunt-contrib-connect",
+  "name": "@unabandoned/grunt-contrib-connect",
   "description": "Start a connect web server",
   "version": "5.0.1",
   "author": {
     "name": "Grunt Team",
     "url": "https://gruntjs.com/"
   },
-  "repository": "gruntjs/grunt-contrib-connect",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unabandoned/grunt-contrib-connect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/unabandoned/grunt-contrib-connect/issues"
+  },
+  "homepage": "https://github.com/unabandoned/grunt-contrib-connect#readme",
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=22.12"
   },
   "main": "tasks/connect.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "node --test test/*.test.js",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
-    "async": "^3.2.5",
-    "connect": "^3.7.0",
-    "connect-livereload": "^0.6.1",
-    "http2-wrapper": "^2.2.1",
-    "morgan": "^1.10.0",
-    "open": "^8.0.0",
-    "portscanner": "^2.2.0",
-    "serve-index": "^1.9.1",
-    "serve-static": "^1.15.0"
+    "morgan": "^1.12.1",
+    "open": "^11.0.4",
+    "serve-index": "^1.9.2",
+    "serve-static": "^2.2.1"
   },
   "devDependencies": {
-    "grunt": "^1.6.1",
-    "grunt-contrib-internal": "^9.0.0",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-nodeunit": "^5.0.0"
+    "@commitlint/cli": "21.2.2",
+    "@commitlint/config-conventional": "21.2.2",
+    "grunt": "1.6.3"
   },
   "keywords": [
     "gruntplugin",
@@ -38,7 +40,12 @@
     "connect",
     "http"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": [
-    "tasks"
+    "tasks",
+    "LICENSE-MIT"
   ]
 }
